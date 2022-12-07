@@ -39,6 +39,16 @@ class BaseModel:
                 kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
                                                          "%Y-%m-%d %H:%M:%S.%f"
                                                          )
+            if 'updated_at' not in kwargs:
+                kwargs['updated_at'] = datetime.now()
+            elif not isinstance(kwargs['updated_at'], datetime):
+                kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
+                                                         "%Y-%m-%d %H:%M:%S.%f"
+                                                         )
+            if getenv('HBNB_TYPE_STORAGE') != "db":
+                kwargs.pop('__class__', None)
+            for k, v in kwargs.items():
+                setattr(self, k, v)
 
     def __str__(self):
         """Returns a string representation of the instance"""
