@@ -67,3 +67,6 @@ class FileStorage:
                 # save the changes to the JSON file
                 self.save()
 
+    def close(self):
+        """ Closes the engine """
+        self.reload()
