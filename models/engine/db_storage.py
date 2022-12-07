@@ -36,3 +36,15 @@ class DBStorage:
 
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
+
+    def all(self, cls=None):
+        """ queries hbnb_dev_db for stored objects """
+        objects = {}
+        for key in classes:
+            if cls is None or cls is classes[key] or cls is key:
+                results = self.__session.query(classes[key]).all()
+                for obj in results:
+                    k = f'{obj.__class__.__name__}.{obj.id}'
+                    # del obj._sa_instance_state
+                    objects[k] = obj
+        return objects
