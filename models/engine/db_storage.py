@@ -48,3 +48,7 @@ class DBStorage:
                     # del obj._sa_instance_state
                     objects[k] = obj
         return objects
+
+    def new(self, obj):
+        """ adds obj to current database session """
+        self.__session.add(obj)
