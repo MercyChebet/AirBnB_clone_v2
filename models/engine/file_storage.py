@@ -8,6 +8,15 @@ class FileStorage:
     __file_path = 'file.json'
     __objects = {}
 
+    def all(self, cls=None):
+        """Returns a dictionary of models currently in storage"""
+        if cls:
+            class_dict = {}
+            for key, value in self.__objects.items():
+                if cls == value.__class__ or cls == value.__class__.__name__:
+                    class_dict[key] = value
+            return class_dict
+        return self.__objects
     def new(self, obj):
         """Adds new object to storage dictionary"""
         self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
@@ -58,26 +67,4 @@ class FileStorage:
                 # save the changes to the JSON file
                 self.save()
 
-    def all(self, cls=None):
-        """
-        Returns a list of all objects in the storage.
-        If cls is specified, the list will only contain objects of the given 
-        class.
-        """
-        # if no class is specified, return a list of all objects
-        if cls is None:
-            return list(self.__objects.values())
-
-        # if a class is specified, return a list of objects of that class
-        else:
-            # create an empty list for objects of the given class
-            obj_list = []
-            # iterate over the objects in the storage
-            for obj in self.__objects.values():
-                # check if the object is an instance of the given class
-                if isinstance(obj, cls):
-                    # add the object to the list
-                    obj_list.append(obj)
-
-            return obj_list
 
