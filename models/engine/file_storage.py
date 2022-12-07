@@ -59,13 +59,12 @@ class FileStorage:
         Deletes the specified object from the list of objects if it exists.
         If obj is None, the method does nothing.
         """
-        if obj is not None:
-            # check if the object is in the list of objects
-            if obj in self.__objects.values():
-                # delete the object from the list of objects
-                del self.__objects[obj.id]
-                # save the changes to the JSON file
-                self.save()
+        if obj:
+            key = f'{obj.__class__.__name__}.{obj.id}'
+            all_class_objs = self.all(obj.__class__.__name__)
+            if all_class_objs.get(key):
+                del FileStorage.__objects[key]
+            self.save()
 
     def close(self):
         """ Closes the engine """
