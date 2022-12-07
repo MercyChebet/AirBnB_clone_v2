@@ -67,4 +67,3 @@ class FileStorage:
                 # save the changes to the JSON file
                 self.save()
 
-
