@@ -81,3 +81,6 @@ class BaseModel:
             '__class__': self.__class__.__name__
         })
         return dictionary
+
+    def delete(self):
+        models.storage.delete(self)
