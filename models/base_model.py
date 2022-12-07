@@ -3,7 +3,14 @@
 import uuid
 from datetime import datetime
 from os import getenv
+import models
 
+if getenv('HBNB_TYPE_STORAGE') == "db":
+    Base = declarative_base()
+else:
+    class Base:
+        """useless class"""
+        pass
 
 class BaseModel:
     """A base class for all hbnb models"""
